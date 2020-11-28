@@ -1,0 +1,8 @@
+rm *.csv;
+TIMEFORMAT=%3R; 
+for i in {1..25000}; do (time java fox) 2>> java.csv; done;
+for i in {1..25000}; do (time python fox.py) 2>> py.csv; done;
+for i in {1..25000}; do (time ./foxc) 2>>cpp.csv ; done;
+for i in {1..25000}; do (time ./fox) 2>>asm.csv ; done;
+
+

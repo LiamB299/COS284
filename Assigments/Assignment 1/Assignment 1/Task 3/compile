@@ -1,0 +1,2 @@
+yasm -f elf64 -g dwarf2 -l hello.lst hello.asm
+ld -o hello hello.o

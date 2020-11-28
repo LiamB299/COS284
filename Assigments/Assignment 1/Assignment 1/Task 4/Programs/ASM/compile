@@ -1,0 +1,2 @@
+yasm -f elf64 -g dwarf2 -l fox.lst fox.asm
+ld -o fox fox.o

@@ -1,0 +1,4 @@
+     1                                 %line 1+1 list.asm
+     2                                 [segment .data]
+     3 00000000 00000000               zero dd 0
+     4 00000004 00000000               nzero dd -0

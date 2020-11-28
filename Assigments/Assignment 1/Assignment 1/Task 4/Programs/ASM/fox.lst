@@ -1,0 +1,18 @@
+     1                                 %line 1+1 fox.asm
+     2                                 [segment .data]
+     3 00000000 54686520717569636B-    hello: db "The quick brown fox jumps over the lazy dog.",0x0a
+     4 00000000 2062726F776E20666F-
+     5 00000000 78206A756D7073206F-
+     6 00000000 76657220746865206C-
+     7 00000000 617A7920646F672E0A 
+     8                                 [segment .text]
+     9                                 [global _start]
+    10                                 _start:
+    11 00000000 B801000000              mov eax,1
+    12 00000005 BF01000000              mov edi,1
+    13 0000000A BA2C000000              mov edx, 44
+    14 0000000F 488D3425[00000000]      lea rsi,[hello]
+    15 00000017 0F05                    syscall
+    16 00000019 B83C000000              mov eax,60
+    17 0000001E 31FF                    xor edi, edi
+    18 00000020 0F05                    syscall
