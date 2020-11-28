@@ -1,0 +1,89 @@
+     1                                 %line 1+1 task3.asm
+     2                                 [segment .data]
+     3 00000000 506C6561736520696E-     out1 db "Please input a number: "
+     4 00000000 7075742061206E756D-
+     5 00000000 6265723A20         
+     6                                 
+     7                                 [segment .bss]
+     8 00000000 <gap>                   num1 resb 2
+     9 00000002 <gap>                   dig resb 1
+    10                                 
+    11                                 [segment .text]
+    12                                 [global _start]
+    13                                 
+    14                                 _start:
+    15                                 
+    16 00000000 48C7C001000000          mov rax, 1
+    17 00000007 48C7C701000000          mov rdi, 1
+    18 0000000E 48C7C6[00000000]        mov rsi, out1
+    19 00000015 48C7C217000000          mov rdx, 23
+    20 0000001C 0F05                    syscall
+    21                                 
+    22 0000001E 48C7C000000000          mov rax, 0
+    23 00000025 48C7C700000000          mov rdi, 0
+    24 0000002C 48C7C6[00000000]        mov rsi, num1
+    25 00000033 48C7C203000000          mov rdx, 3
+    26 0000003A 0F05                    syscall
+    27                                 
+    28 0000003C 8A0425[00000000]        mov al, [num1]
+    29 00000043 2C30                    sub al, 48
+    30 00000045 49C7C00A000000          mov r8, 10
+    31 0000004C 49F7E0                  mul r8
+    32 0000004F 4188C0                  mov r8b, al
+    33 00000052 44020425[01000000]      add r8b, byte[num1+1]
+    34 0000005A 4180E830                sub r8b, 48
+    35                                 
+    36 0000005E 4C89C1                  mov rcx, r8
+    37 00000061 4831C0                  xor rax, rax
+    38 00000064 48C7C001000000          mov rax, 1
+    39 0000006B 48D3E0                  shl rax, cl
+    40 0000006E 4883E801                sub rax, 1
+    41                                 
+    42 00000072 49C7C20A000000          mov r10, 10
+    43 00000079 4989C7                  mov r15, rax
+    44 0000007C 4D31E4                  xor r12, r12
+    45                                 
+    46                                 
+    47                                 reverse:
+    48 0000007F 4831D2                  xor rdx, rdx
+    49 00000082 49F7F2                  div r10
+    50 00000085 4989C3                  mov r11, rax
+    51 00000088 4989D5                  mov r13, rdx
+    52                                 
+    53                                 
+    54 0000008B 4C89E0                  mov rax, r12
+    55 0000008E 49F7E2                  mul r10
+    56 00000091 4989C4                  mov r12, rax
+    57                                 
+    58                                 
+    59 00000094 4D01EC                  add r12, r13
+    60                                 
+    61                                 
+    62 00000097 4C89D8                  mov rax, r11
+    63 0000009A 4883F800                cmp rax, 0
+    64 0000009E 75DD                    jnz reverse
+    65                                 
+    66 000000A0 4D89E7                  mov r15, r12
+    67                                 
+    68                                 
+    69                                 
+    70                                 print:
+    71 000000A3 4831D2                  xor rdx, rdx
+    72 000000A6 4C89E0                  mov rax, r12
+    73 000000A9 49F7F2                  div r10
+    74 000000AC 881425[00000000]        mov [dig], dl
+    75 000000B3 800425[00000000]30      add byte[dig], 48
+    76 000000BB 4989C4                  mov r12, rax
+    77                                 
+    78 000000BE 48C7C001000000          mov rax, 1
+    79 000000C5 48C7C701000000          mov rdi, 1
+    80 000000CC 48C7C6[00000000]        mov rsi, dig
+    81 000000D3 48C7C201000000          mov rdx, 1
+    82 000000DA 0F05                    syscall
+    83                                 
+    84 000000DC 4983FC00                cmp r12, 0
+    85 000000E0 75BF                    jnz print
+    86                                 
+    87 000000E2 48C7C03C000000          mov rax, 60
+    88 000000E9 48C7C700000000          mov rdi, 0
+    89 000000F0 0F05                    syscall
