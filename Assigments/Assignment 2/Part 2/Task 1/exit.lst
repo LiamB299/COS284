@@ -1,0 +1,81 @@
+     1                                 %line 1+1 main.asm
+     2                                 [segment .data]
+     3 00000000 506C6561736520656E-     input_text_1 db "Please enter the first number: "
+     4 00000000 746572207468652066-
+     5 00000000 69727374206E756D62-
+     6 00000000 65723A20           
+     7 0000001F 506C6561736520656E-     input_text_2 db "Please enter the second number: "
+     8 0000001F 746572207468652073-
+     9 0000001F 65636F6E64206E756D-
+    10 0000001F 6265723A20         
+    11                                 
+    12                                 [segment .bss]
+    13 00000000 <gap>                   in_1 resb 2
+    14 00000002 <gap>                   in_2 resb 2
+    15 00000004 <gap>                   quot resb 1
+    16 00000005 <gap>                   rem resb 1
+    17 00000006 <gap>                   junk resb 1
+    18                                 
+    19                                 [segment .text]
+    20                                 [global _start]
+    21                                 
+    22                                 _start:
+    23 00000000 48C7C000000000          mov rax, 0
+    24 00000007 48C7C200000000          mov rdx, 0
+    25                                 
+    26 0000000E 48C7C001000000          mov rax, 1
+    27 00000015 48C7C701000000          mov rdi, 1
+    28 0000001C 48C7C6[00000000]        mov rsi, input_text_1
+    29 00000023 48C7C21F000000          mov rdx, 31
+    30 0000002A 0F05                    syscall
+    31                                 
+    32 0000002C 48C7C000000000          mov rax, 0
+    33 00000033 48C7C700000000          mov rdi, 0
+    34 0000003A 48C7C6[00000000]        mov rsi, in_1
+    35 00000041 48C7C202000000          mov rdx, 2
+    36 00000048 0F05                    syscall
+    37                                 
+    38 0000004A 48C7C001000000          mov rax, 1
+    39 00000051 48C7C701000000          mov rdi, 1
+    40 00000058 48C7C6[00000000]        mov rsi, input_text_2
+    41 0000005F 48C7C220000000          mov rdx, 32
+    42 00000066 0F05                    syscall
+    43                                 
+    44 00000068 48C7C000000000          mov rax, 0
+    45 0000006F 48C7C700000000          mov rdi, 0
+    46 00000076 48C7C6[00000000]        mov rsi, in_2
+    47 0000007D 48C7C202000000          mov rdx, 2
+    48 00000084 0F05                    syscall
+    49                                 
+    50 00000086 448A0C25[00000000]      mov r9b, [in_1]
+    51 0000008E 448A1425[00000000]      mov r10b, [in_2]
+    52 00000096 4500D1                  add r9b, r10b
+    53 00000099 4180E960                sub r9b, 96
+    54 0000009D 4488C8                  mov al, r9b
+    55 000000A0 49C7C00A000000          mov r8, 10
+    56 000000A7 48C7C200000000          mov rdx, 0
+    57 000000AE 49F7F0                  div r8
+    58                                 
+    59 000000B1 4188C1                  mov r9b, al
+    60 000000B4 4180C130                add r9b, 48
+    61 000000B8 44880C25[00000000]      mov [quot], r9b
+    62                                 
+    63 000000C0 4188D2                  mov r10b, dl
+    64 000000C3 4180C230                add r10b, 48
+    65 000000C7 44881425[00000000]      mov [rem], r10b
+    66                                 
+    67 000000CF 48C7C001000000          mov rax, 1
+    68 000000D6 48C7C701000000          mov rdi, 1
+    69 000000DD 48C7C6[00000000]        mov rsi, quot
+    70 000000E4 48C7C201000000          mov rdx, 1
+    71 000000EB 0F05                    syscall
+    72                                 
+    73 000000ED 48C7C001000000          mov rax, 1
+    74 000000F4 48C7C701000000          mov rdi, 1
+    75 000000FB 48C7C6[00000000]        mov rsi, rem
+    76 00000102 48C7C201000000          mov rdx, 1
+    77 00000109 0F05                    syscall
+    78                                 
+    79 0000010B 48C7C03C000000          mov rax, 60
+    80 00000112 48C7C700000000          mov rdi, 0
+    81 00000119 0F05                    syscall

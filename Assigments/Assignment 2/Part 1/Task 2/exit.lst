@@ -1,0 +1,44 @@
+     1                                 %line 1+1 task2.asm
+     2                                 [segment .data]
+     3 00000000 506C6561736520696E-     input_text db "Please input an integer: "
+     4 00000000 70757420616E20696E-
+     5 00000000 74656765723A20     
+     6 00000019 526573756C743A2070-     output_text_p db "Result: positive", 10
+     7 00000019 6F7369746976650A   
+     8 0000002A 526573756C743A206E-     output_text_n db "Result: negative", 10
+     9 0000002A 656761746976650A   
+    10                                 
+    11                                 
+    12                                 
+    13                                 [segment .bss]
+    14 00000000 <gap>                   input resb 1
+    15                                 
+    16                                 [segment .text]
+    17                                 [global _start]
+    18                                 
+    19                                 _start:
+    20 00000000 48C7C001000000          mov rax, 1
+    21 00000007 48C7C701000000          mov rdi, 1
+    22 0000000E 48C7C6[00000000]        mov rsi, input_text
+    23 00000015 48C7C219000000          mov rdx, 25
+    24 0000001C 0F05                    syscall
+    25                                 
+    26 0000001E 48C7C000000000          mov rax, 0
+    27 00000025 48C7C700000000          mov rdi, 0
+    28 0000002C 48C7C6[00000000]        mov rsi, input
+    29 00000033 48C7C201000000          mov rdx, 1
+    30 0000003A 0F05                    syscall
+    31                                 
+    32 0000003C 48C7C6[00000000]        mov rsi, output_text_p
+    33 00000043 48C7C0[00000000]        mov rax, output_text_n
+    34                                 
+    35 0000004A 802C25[00000000]35      sub byte[input], 53
+    36 00000052 480F4CF0                cmovl rsi, rax
+    37                                 
+    38 00000056 48C7C001000000          mov rax, 1
+    39 0000005D 48C7C701000000          mov rdi, 1
+    40 00000064 48C7C211000000          mov rdx, 17
+    41 0000006B 0F05                    syscall
+    42 0000006D 48C7C03C000000          mov rax, 60
+    43 00000074 48C7C700000000          mov rdi, 0
+    44 0000007B 0F05                    syscall
